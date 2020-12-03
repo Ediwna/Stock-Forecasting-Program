@@ -1,37 +1,43 @@
-## Welcome to GitHub Pages
+# Stock-Forecasting-Program
 
-You can use the [editor on GitHub](https://github.com/Ediwna/Stock-Forecasting-Program/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## Members:
+- San Gu, Dept. of Information System 2014005305, Hanyang University, goosan126@gmail.com
+- YeonJu Nam, Dept. of Information System 2018007510, HanyangnUniversity, skaduswn0515@naver.com
+- Yeol Yang, Dept. of Information System 2018057701, Hanyang University, yeolyang77@gmail.com
+- CheongRok Yoon, Dept. of Information System 2011004556, Hanyang University,  dbscjdfhr@gmail.com
+- Jaemin Lee, Dept. of Information System 2018007656, Hanyang University, jm4984@naver.com
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## I. Introduction
+### - Motivation: 
+Recently, low interest rates and soaring housing prices have created a craze for investment among young people. As a result, there is a growing need for programs to help investment for generations unfamiliar with stocks. 
 
-### Markdown
+### - What do you want to see at the end?
+This program provides easy access to the desired stock and stock market information. It is a program that predicts whether the stock will go up or down based on the information of the stock you have. Besides that, it also soothes and comforts investors' moods that change when stock price fluctuates. This program will be a reliable guide for you in the difficult stock world and allow you to check your account information by voice at any time.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## II. Datasets
+### (1) Selecting the target data set
+![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure1.png?raw=true)
+Figure 1 (Samsung data set example)
 
-```markdown
-Syntax highlighted code block
+We went through the stock selection process for deep learning as follows. First, among the 200 stocks that represent Kospi200, the top 10 stocks in market capitalization were selected. And to predict whether each stock will rise or fall tomorrow, we collected daily data from the listing date to the present day. Daily data consist of open price, high price, low price, close price, and trading volume for each day. In addition, the adjusted stock price was selected to obtain accurate stock prices excluding factors that affect stock prices such as dividends, capital decrease, and capital increase. The stock data we selected were obtained through Kiwoom API +
 
-# Header 1
-## Header 2
-### Header 3
+### (2) Data processing for deep learning
+Our goal is to show the probability of stocks rising or falling tomorrow. The LSTM will be used as a deep learning model. LSTM is good at learning series data. It also serves to hand over important information of past learning to the preceding nodes. In addition, the Binary_crossentropy will be used as a loss function, with only two cases of classes predicting whether the result will rise or fall. It Computes the cross-entropy loss between true labels and predicted labels when there are only two label classes (assumed to be 0 and 1). 
 
-- Bulleted
-- List
+First, we extracted a series of datasets to configure the data to suit LSTM as follows:
+![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure2.png?raw=true)
+Figure 2
 
-1. Numbered
-2. List
+As you can see in Figure 2, we have extracted five column data of open price, close price, high price, low price, and trading volume of M days (blue bar) from the start date (t) and close data of M+1 day (yellow bar), which we intend to predict. It then extracted data from M days that lasted one day (t+1) from the start date and extracted close data from M+1 day. The above process was repeated over and over the entire dataset.
 
-**Bold** and _Italic_ and `Code` text
+Second, we applied one-hot encoding to the M+1 (yellow bar) data that we wanted to predict to use the binary_crosentropy loss function.
+![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure3.png?raw=true)
+Figure 3
 
-[Link](url) and ![Image](src)
-```
+If the close price (t=M+1) rose the following day from the previous day's (t=M) close price, the M+1 data would be replaced with 1 instead of 0 otherwise. In other words, M+1 data was composed of two classes: 1 when rising and 0 when falling.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Lastly, we divided the training set and test set into 80:20 ratio. 
+![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure4.png?raw=true)
+Figure 4
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Ediwna/Stock-Forecasting-Program/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+With fewer data to be learned than expected, the ratio of training sets to test sets was estimated to be an appropriate ratio(80:20).
