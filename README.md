@@ -27,14 +27,17 @@ Our goal is to show the probability of stocks rising or falling tomorrow. The LS
 First, we extracted a series of datasets to configure the data to suit LSTM as follows:
 ![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/main/figure2.png?raw=true)
 Figure 2
+
 As you can see in Figure 2, we have extracted five column data of open price, close price, high price, low price, and trading volume of M days (blue bar) from the start date (t) and close data of M+1 day (yellow bar), which we intend to predict. It then extracted data from M days that lasted one day (t+1) from the start date and extracted close data from M+1 day. The above process was repeated over and over the entire dataset.
 
 Second, we applied one-hot encoding to the M+1 (yellow bar) data that we wanted to predict to use the binary_crosentropy loss function.
 ![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/main/figure3.png?raw=true)
 Figure 3
+
 If the close price (t=M+1) rose the following day from the previous day's (t=M) close price, the M+1 data would be replaced with 1 instead of 0 otherwise. In other words, M+1 data was composed of two classes: 1 when rising and 0 when falling.
 
 Lastly, we divided the training set and test set into 80:20 ratio. 
 ![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/main/figure4.png?raw=true)
 Figure 4
+
 With fewer data to be learned than expected, the ratio of training sets to test sets was estimated to be an appropriate ratio(80:20).
