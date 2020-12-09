@@ -55,7 +55,7 @@ With fewer data to be learned than expected, the ratio of training sets to test 
 
 ![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure5.png?raw=true)
 
-                                                           Figure 5
+                                                       Figure 5
                                              
 #### (1). User
 Calls to play ‘Nugustock’ by asking someone to start playing ‘Nugustock’. In addition, if you ask for your account information, total return, return per stock item, and whether the stock price of tomorrow will rise or fall, you can hear the answer from any speaker.
@@ -74,13 +74,13 @@ It delivers data tailored to the request from the backend.
 
 ![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure6.png?raw=true)
 
-                                                            Figure 6
+                                                        Figure 6
                                                             
 #### (2). Setting AWS Lambda Server Address in NUGU Play Builder
 
 ![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure7.png?raw=true)
 
-                                                            Figure 7
+                                                        Figure 7
                                                             
 #### (3). Write and describe Python code loaded into Lambda
 ```  
@@ -193,7 +193,7 @@ Send API Response code to Who Stock Play. At this time, the output is the respon
 
 ![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure8.png?raw=true)
 
-                                                            Figure 8
+                                                        Figure 8
                                                         
 We uses the tensorflow library to learn, receiving processed data, learning, and storing values of parameters. They also work to calculate the predicted probability values. In learning data, we used LSTM optimized for continuous data. LSTM serves to hand over important information of past learning to the preceding nodes.  The form of NN is Many - to - one. Because we receive as much learning data as M days and print only one output of probability whether it will rise or fall on M+1. In addition, the Binary_crossentropy will be used as a loss function, with only two cases of classes predicting whether the result will rise or fall. It Computes the cross-entropy loss between true labels and predicted labels when there are only two label classes (assumed to be 0 and 1). Finally, we selected the last activation function as sigmoid function to indicate output as probability.
 
@@ -201,5 +201,5 @@ We uses the tensorflow library to learn, receiving processed data, learning, and
 Kiwoom OPEN API serves to communicate with securities firms. it adopted the ocx method. Therefore, we used the PyQt5 library to construct the overall system. Logging in to securities firms is essential and is designed to get stock event information and personal stock account information. We get the information in real time from the securities company and upload it to firebase.
 
 ## V. Related Work
-In order to implement the functions of Nougat Stock Play, it was inevitable to call the Backend proxy in Nugu Play, and while looking for a method, I found an article that developed Nugu Play by connecting AWS Lambda and NUGU speakers.(https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)   
+In order to implement the functions of Nougat Stock Play, it was inevitable to call the Backend proxy in Nugu Play, and while looking for a method, I found an article that developed Nugu Play by connecting AWS Lambda and NUGU speakers. [https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0](https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)   
 AWS Lambda is a module that allows you to run code for backend services on AWS servers without having to build and manage servers, and it was a very good article for me with little knowledge of backend development.
