@@ -1,5 +1,7 @@
 # Stock-Forecasting-Program
 
+![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/stock.jpg?raw=true)
+
 ## Members:
 - San Gu, Dept. of Information System 2014005305, Hanyang University, goosan126@gmail.com
 - YeonJu Nam, Dept. of Information System 2018007510, HanyangnUniversity, skaduswn0515@naver.com
