@@ -60,31 +60,30 @@ With fewer data to be learned than expected, the ratio of training sets to test 
                                                        Figure 5
                                              
 #### (1). User
-Calls to play ‘Nugustock’ by asking someone to start playing ‘Nugustock’. In addition, if you ask for your account information, total return, return per stock item, and whether the stock price of tomorrow will rise or fall, you can hear the answer from any speaker.
-
-#### (2). NUGU Play
-After executing ‘Nugustock’ Play, if the user's intent is recognized correctly, the appropriate action is called to answer the user. At this time, the name of the action is attached to the server address of the connected backend, and the backend requests information that matches the user's command.
+Users can call NUGU stock play by requesting to start NUGU stock play. And if users request their account information, total profit rate, each profit rate, and tomorrow’s stock price up/down, they can listen the answer to NUGU Speaker.
+#### (2). NUGU Speaker(NUGU Play)
+If the user’s request (Intent) is correctly recognized after executing ‘NUGU tock’, NUGU Speaker call the action and answer to the user. To perform this, it requests backend the information c to user’s command by adding action name to connected backend proxy server address.
 
 #### (3). AWS Lambda
-Receives an API Request and retrieves data from DB. Then, it executes the Python code stored in the lambda, processes the data to be sent in json format, and sends it to NUGU Play as an API response.
+If AWS Lambda received API request from NUGU Play, then it gets corresponding data from Firebase Realtime Database. Then, it execute python code that is saved in lambda, process from DB data to json format, and send API response to NUGU Play.
 
 #### (4). Firebase Realtime Database
-It delivers data tailored to the request from the backend.
+Firebase Realtime Database send the data corresponding the request of the backend.
 
 ### 2. Development – Backend Proxy
-#### (1). Build a server through AWS Lambda and add an API
+#### (1). Server Build with AWS Lambda and API Add
 
 ![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure6.png?raw=true)
 
                                                         Figure 6
                                                             
-#### (2). Setting AWS Lambda Server Address in NUGU Play Builder
+#### (2). AWS Lambda URL setting in NUGU Play Builder
 
 ![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure7.png?raw=true)
 
                                                         Figure 7
                                                             
-#### (3). Write and describe Python code loaded into Lambda
+#### (3). Write and Explain Python code loaded in lambda
 ```  
 import firebase_admin  
 from firebase_admin import credentials  
@@ -92,7 +91,7 @@ from firebase_admin import db
 import json  
 ```  
 
-Import the firebase_admin library to import data from Firebase Realtime DB. In addition, json library is also imported to receive Nugu Play requests from AWS Lambda.
+To get the data at Firebase Realtime Database, it imports firebase_admin library. Also, to get NUGU Play request delivered from AWS Lambda, it imports json library.
 
 ```
 def lambda_handler(event, context):  
@@ -105,7 +104,7 @@ def lambda_handler(event, context):
     parameters = action["parameters"]  
 ```
     
-When processing code in a lambda following the guide, I set the name of the method to lambda_handler to recognize which method to handle. Also, actionName and parameter were extracted by reading json-type data loaded with information such as action name and parameter.
+In order to let AWS Lambda recognize the code, the method name is set to ‘lambda_handler’. Also, it extract action name and parameters by reading json format data that contain the information like action name, parameters.
 
 ```
 cred = credentials.Certificate(  
@@ -123,8 +122,8 @@ except:
     })  
 ```
     
-To read the Firebase DB, first check whether there is any information about the database. If there is, it was re-initialized after removing the information from the database to read the stock data that fluctuates in real time.
-
+To read Firebase Realtime Database, it first checks whether the code has the information about the database. If it has, the code deletes and initialize it for reading real-time stock data.  
+ 
 ```
 finally:  
     if actionName == "answer_predict":  
@@ -137,7 +136,7 @@ finally:
         return callback_response_basic({"updown": message})  
 ```
 
-When the database information is saved, the appropriate information is retrieved from the db according to the called action name, processed into json format data, and sent to Lambda. First, if the action name is answer_predict, the company name is fetched from json data from Whose Stock. Then, the forecast information is fetched from the database and the up/down probability of the stock matching the company name is obtained. Finally, the result is sent to Whostock through json data according to the higher probability.
+If the database information is saved, it gets the data corresponding action, manufacture to json format data, and send to AWS Lambda. First, if the action name is ‘answer_predict’, the code gets the company name from the json data of NUGU Stock Play. Then, it gets ‘예측정보’ datas from database and search the price up and down rate with the company name. Finally, it sends the higher rate to NUGU Stock with json data. 
 
 ```
 elif actionName == "answer_totalprofit":  
@@ -146,7 +145,7 @@ elif actionName == "answer_totalprofit":
     return callback_response_basic({"totalprofit": totalprofit['총수익률']})  
 ```
 
-If the action name is answer_totalprofit, the total return information is fetched from the database and sent to Nounstock through json data.
+If the action name is ‘answer_totalprofit’, the code gets total profit information at database,and sends it to NUGU Stock with json data.
 
 ```
 elif actionName == "answer_show":  
@@ -160,7 +159,7 @@ elif actionName == "answer_show":
     return callback_response_basic({"stock_list": message})  
 ```
 
-If the action name is answer_show, the account information is fetched from the database, the names of the items in the account are extracted and sent to Whostock through json data.
+If the action name is ‘answer_show, the code gets ‘계좌정보’ data at database, extract names of stocks in the account, and sends it to NUGU Stock with json data.
 
 ```
 elif actionName == "answer_eachprofit":
@@ -176,7 +175,7 @@ elif actionName == "answer_eachprofit":
     return callback_response_basic({"message": message})
 ```
 
-If the action name is answer_eachprofit, account information is fetched from the database, and the rate of return for each item in the account is sent to Nounstock through json data.
+If the action name is ‘answer_eachprofit, the code gets ‘계좌정보’ data at database, and sends profit rate of each stock to NUGU Stock with json data.
 
 ```
 def callback_response_basic(message):
@@ -188,7 +187,7 @@ def callback_response_basic(message):
     }
 ```
 
-Send API Response code to Who Stock Play. At this time, the output is the response value to the request (total rate of return, the name of the item in the account, etc.), and the type is json format.
+It sends API Response Code to NUGU Stock Play. The output is the response about the request (total profit rate, the name of stock in the account, etc.), and the parameter’s type is json format.
 
 ## IV. Evaluation & Analysis
 ### Predict Model
@@ -203,5 +202,6 @@ We uses the tensorflow library to learn, receiving processed data, learning, and
 Kiwoom OPEN API serves to communicate with securities firms. it adopted the ocx method. Therefore, we used the PyQt5 library to construct the overall system. Logging in to securities firms is essential and is designed to get stock event information and personal stock account information. We get the information in real time from the securities company and upload it to firebase.
 
 ## V. Related Work
-In order to implement the functions of Nougat Stock Play, it was inevitable to call the Backend proxy in Nugu Play, and while looking for a method, I found an article that developed Nugu Play by connecting AWS Lambda and NUGU speakers. [https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0](https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)   
-AWS Lambda is a module that allows you to run code for backend services on AWS servers without having to build and manage servers, and it was a very good article for me with little knowledge of backend development.
+### NUGU 스피커와 AWS Lambda 사용하기
+[https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0](https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)   
+For implementing the function of NUGU Stock Play, it is inevitable to call backend proxy server. So I explored the solution, and found this post that develop NUGU Play by combining AWS Lambda and NUGU Play Builder.
