@@ -202,7 +202,7 @@ We uses the tensorflow library to learn, receiving processed data, learning, and
 Kiwoom OPEN API serves to communicate with securities firms. it adopted the ocx method. Therefore, we used the PyQt5 library to construct the overall system. Logging in to securities firms is essential and is designed to get stock event information and personal stock account information. We get the information in real time from the securities company and upload it to firebase.
 
 ## V. Related Work
-### NUGU 스피커와 AWS Lambda 사용하기
+### Using NUGU Speaker and AWS Lambda
 [https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0](https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)   
 For implementing the function of NUGU Stocker Play, it is inevitable to call backend proxy server. So I explored the solution, and found this post that develop NUGU Play by combining AWS Lambda and NUGU Play Builder.
 
@@ -210,6 +210,7 @@ For implementing the function of NUGU Stocker Play, it is inevitable to call bac
 [https://download.kiwoom.com/web/openapi/kiwoom_openapi_plus_devguide_ver_1.1.pdf](https://download.kiwoom.com/web/openapi/kiwoom_openapi_plus_devguide_ver_1.1.pdf)   
 referring to the development guide of Kiwoom Securities firm.    
 
+### Using Deep Learning(LSTM) to predict the stock price of Samsung Electronics.
 [https://teddylee777.github.io/tensorflow/LSTM%EC%9C%BC%EB%A1%9C-%EC%98%88%EC%B8%A1%ED%95%B4%EB%B3%B4%EB%8A%94-%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90-%EC%A3%BC%EA%B0%80](https://teddylee777.github.io/tensorflow/LSTM%EC%9C%BC%EB%A1%9C-%EC%98%88%EC%B8%A1%ED%95%B4%EB%B3%B4%EB%8A%94-%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90-%EC%A3%BC%EA%B0%80)  
 the reference for stock prediction.   
 
