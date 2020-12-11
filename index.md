@@ -215,9 +215,9 @@ referring to the development guide of Kiwoom Securities firm.
 the reference for stock prediction.   
 
 ## VI. Conclusion: Discussion
-Likewise, based on the data of Kiwoom API, NUGU Play which inform the stock information is developed. Users can watch their stocks, total profit rate, each stock rate, or prediction of tomorrow’s stock price change by calling NUGU Stocker.   
-But there are some problems to harm the accuracy of NUGU Stocker. We’ll be in agony to resolve those problems.  
+Likewise, based on the data of Kiwoom API, NUGU Play which inform the stock information is developed. Users can watch their stocks, total profit rate, each stock rate, or prediction of tomorrow’s stock price change by calling NUGU Stocker.  
 
+In many LSTM examples, learning model is often done at stock prices. However, this leads to an autocorrelation error. Rather than the computer predicting the price of a stock, it simply makes an error that closely follows the previous day's price. So, my group trained in two labels, rising and falling. As a result, learning was difficult. Increasing the parameters did not change the result. From these results, we concluded that data for stock forecasting were lacking or that other key variables were missing. The performance is not perfect yet, but it was meant to be reached with these conclusions. This part will be modified later to improve performance.
 ### (1). Result
 First, call NUGU Stocker play by speak ‘스토커 오픈’ or ‘스토커 시작’.
 
@@ -252,3 +252,9 @@ If users request “내가 가진 종목 불러줘”, NUGU Stocker informs the 
 2. Various variables affecting stock prices, such as interest rates and real estate indicators, are also included in the learning data.  
 3. In predict function, NUGU Stocker could recognize only 15 stocks, so We’ll increase recognized stocks to 200 stocks.  
 4. The accuracy rate of prediction is just 54 percent. Therefore, we’ll have priority to increase this accuracy.  
+
+## VII. Video Link
+
+[Demo Video](https://youtu.be/5gLNzhLXSiY)
+
+[NUGU Stocker Presentation Video](https://youtu.be/q9XDHqgouNg)
