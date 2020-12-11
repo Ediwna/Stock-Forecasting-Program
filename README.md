@@ -62,7 +62,7 @@ With fewer data to be learned than expected, the ratio of training sets to test 
 #### (1). User
 Users can call NUGU stock play by requesting to start NUGU stock play. And if users request their account information, total profit rate, each profit rate, and tomorrow’s stock price up/down, they can listen the answer to NUGU Speaker.
 #### (2). NUGU Speaker(NUGU Play)
-If the user’s request (Intent) is correctly recognized after executing ‘NUGU tock’, NUGU Speaker call the action and answer to the user. To perform this, it requests backend the information c to user’s command by adding action name to connected backend proxy server address.
+If the user’s request (Intent) is correctly recognized after executing ‘NUGU stocker’, NUGU Speaker call the action and answer to the user. To perform this, it needs to construct backend the informations to user’s command by adding action name to connected backend proxy server address.
 
 #### (3). AWS Lambda
 If AWS Lambda received API request from NUGU Play, then it gets corresponding data from Firebase Realtime Database. Then, it execute python code that is saved in lambda, process from DB data to json format, and send API response to NUGU Play.
@@ -202,6 +202,59 @@ We uses the tensorflow library to learn, receiving processed data, learning, and
 Kiwoom OPEN API serves to communicate with securities firms. it adopted the ocx method. Therefore, we used the PyQt5 library to construct the overall system. Logging in to securities firms is essential and is designed to get stock event information and personal stock account information. We get the information in real time from the securities company and upload it to firebase.
 
 ## V. Related Work
-### NUGU 스피커와 AWS Lambda 사용하기
+### Using NUGU Speaker and AWS Lambda
 [https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0](https://velog.io/@jeffyoun/NUGU-%EC%8A%A4%ED%94%BC%EC%BB%A4%EC%99%80-AWS-Lambda-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)   
-For implementing the function of NUGU Stock Play, it is inevitable to call backend proxy server. So I explored the solution, and found this post that develop NUGU Play by combining AWS Lambda and NUGU Play Builder.
+For implementing the function of NUGU Stocker Play, it is inevitable to call backend proxy server. So I explored the solution, and found this post that develop NUGU Play by combining AWS Lambda and NUGU Play Builder.
+
+### Kiwoom Open API Develop Guide(ver 1.1)
+[https://download.kiwoom.com/web/openapi/kiwoom_openapi_plus_devguide_ver_1.1.pdf](https://download.kiwoom.com/web/openapi/kiwoom_openapi_plus_devguide_ver_1.1.pdf)   
+referring to the development guide of Kiwoom Securities firm.    
+
+### Using Deep Learning(LSTM) to predict the stock price of Samsung Electronics.
+[https://teddylee777.github.io/tensorflow/LSTM%EC%9C%BC%EB%A1%9C-%EC%98%88%EC%B8%A1%ED%95%B4%EB%B3%B4%EB%8A%94-%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90-%EC%A3%BC%EA%B0%80](https://teddylee777.github.io/tensorflow/LSTM%EC%9C%BC%EB%A1%9C-%EC%98%88%EC%B8%A1%ED%95%B4%EB%B3%B4%EB%8A%94-%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90-%EC%A3%BC%EA%B0%80)  
+the reference for stock prediction.   
+
+## VI. Conclusion: Discussion
+Likewise, based on the data of Kiwoom API, NUGU Play which inform the stock information is developed. Users can watch their stocks, total profit rate, each stock rate, or prediction of tomorrow’s stock price change by calling NUGU Stocker.  
+
+In many LSTM examples, learning model is often done at stock prices. However, this leads to an autocorrelation error. Rather than the computer predicting the price of a stock, it simply makes an error that closely follows the previous day's price. So, my group trained in two labels, rising and falling. As a result, learning was difficult. Increasing the parameters did not change the result. From these results, we concluded that data for stock forecasting were lacking or that other key variables were missing. The performance is not perfect yet, but it was meant to be reached with these conclusions. This part will be modified later to improve performance.
+### (1). Result
+First, call NUGU Stocker play by speak ‘스토커 오픈’ or ‘스토커 시작’.
+
+
+![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure9.png?raw=true)
+
+                                                        Figure 9
+
+If users request “내일 (Company name) 예측해줘” or “내일 (Company name) 어때”, NUGU Stocker predicts whether tomorrow’s stock price is increased or decreased.  
+
+![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure10.png?raw=true)
+
+                                                        Figure 10
+                                                        
+If users request “종목별 수익률 알려줘”, NUGU Stocker inform users the profit rate of each stock. 
+
+![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure11.png?raw=true)
+
+                                                        Figure 11
+                                                        
+If users request “총 수익률 알려줘”, NUGU Stocker inform users total profit rate of all stocks.
+
+![image](https://github.com/Ediwna/Stock-Forecasting-Program/blob/gh-pages/figure12.png?raw=true)
+
+                                                        Figure 12
+                                                        
+If users request “내가 가진 종목 불러줘”, NUGU Stocker informs the stock name in users’ account.
+
+### (2). Direction of interference improvement.
+#### There are 4 questions for improving our ‘NUGU Stocker’.  
+1. By converting daily data into minute data, increase the data set and expect to learn well.  
+2. Various variables affecting stock prices, such as interest rates and real estate indicators, are also included in the learning data.  
+3. In predict function, NUGU Stocker could recognize only 15 stocks, so We’ll increase recognized stocks to 200 stocks.  
+4. The accuracy rate of prediction is just 54 percent. Therefore, we’ll have priority to increase this accuracy.  
+
+## VII. Video Link
+
+[Demo Video](https://youtu.be/5gLNzhLXSiY)
+
+[NUGU Stocker Presentation Video](https://youtu.be/q9XDHqgouNg)
