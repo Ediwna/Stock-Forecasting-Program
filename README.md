@@ -253,6 +253,8 @@ If users request “내가 가진 종목 불러줘”, NUGU Stocker informs the 
 3. In predict function, NUGU Stocker could recognize only 15 stocks, so We’ll increase recognized stocks to 200 stocks.  
 4. The accuracy rate of prediction is just 54 percent. Therefore, we’ll have priority to increase this accuracy.  
 
+## VII. Video Link
+
 [Demo Video](https://youtu.be/5gLNzhLXSiY)
 
 [NUGU Stocker Presentation Video](https://youtu.be/q9XDHqgouNg)
